@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,6 +13,7 @@ public class MainFrame extends JFrame {
   JPanel mainPanel;
   JPanel sideInputPanel;
   JPanel alphaInputPanel;
+  JPanel buttonPanel;
   JLabel aboutLabel;
   JLabel exerciseLabel;
   JLabel taskLabel;
@@ -20,6 +22,8 @@ public class MainFrame extends JFrame {
   JLabel alphaLabel;
   JTextField alphaField;
   JButton calcButton;
+  JButton delButton;
+  JButton exitButton;
 
   public MainFrame() {
 
@@ -30,18 +34,21 @@ public class MainFrame extends JFrame {
   }
 
   private void setFrame() {
+
     this.setTitle("App");
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setSize(400, 300);
-    // this.pack();
-    this.setVisible(true);
+    // this.setSize(400, 300);
     this.add(mainPanel);
+    this.pack();
+    this.setVisible(true);
+
   }
 
   private void setPanels() {
     this.mainPanel = new JPanel();
     this.sideInputPanel = new JPanel();
     this.alphaInputPanel = new JPanel();
+    this.buttonPanel = new JPanel();
 
     mainPanel.add(this.aboutLabel);
     mainPanel.add(this.exerciseLabel);
@@ -52,21 +59,28 @@ public class MainFrame extends JFrame {
     this.sideInputPanel.add(this.sideField);
     this.alphaInputPanel.add(this.alphaLabel);
     this.alphaInputPanel.add(this.alphaField);
+    this.buttonPanel.add(this.calcButton);
+    this.buttonPanel.add(this.delButton);
+    this.buttonPanel.add(this.exitButton);
     mainPanel.add(sideInputPanel);
     mainPanel.add(alphaInputPanel);
-
-    mainPanel.add(this.calcButton);
+    mainPanel.add(buttonPanel);
+    
 
     mainPanel.setLayout(
       new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS)
     );
 
     sideInputPanel.setLayout(
-      new BoxLayout(sideInputPanel, BoxLayout.LINE_AXIS)
+      new BoxLayout(sideInputPanel, BoxLayout.PAGE_AXIS)
     );
 
     alphaInputPanel.setLayout(
-      new BoxLayout(alphaInputPanel, BoxLayout.LINE_AXIS)
+      new BoxLayout(alphaInputPanel, BoxLayout.PAGE_AXIS)
+    );
+
+    buttonPanel.setLayout(
+      new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS)
     );
 
     EmptyBorder border = new EmptyBorder(10, 10, 10, 10);
@@ -79,23 +93,43 @@ public class MainFrame extends JFrame {
     this.exerciseLabel = new JLabel("Feladat 0312");
     this.taskLabel = new JLabel("Rombuszba beírható kör sugara");
     this.sideLabel = new JLabel("Oldal:");
-    this.sideField = new JTextField(5);
+    this.sideField = new JTextField();
     this.alphaLabel = new JLabel("Alfa szög:");
-    this.alphaField = new JTextField(5);
+    this.alphaField = new JTextField();
     this.calcButton = new JButton("Számít");
+    this.delButton = new JButton("Törlés");
+    this.exitButton = new JButton("Kilépés");
+
+    this.sideField.setMaximumSize(
+      new Dimension(250, 30)
+    );
+    this.alphaField.setMaximumSize(
+      new Dimension(250, 30)
+    );
 
     Font font = new Font("sans serif", Font.BOLD, 22);
     this.exerciseLabel.setFont(font);
 
-    this.calcButton.addActionListener(a -> buttonAction());
+    this.calcButton.addActionListener(a -> calcButtonAction());
+    this.delButton.addActionListener(a -> delButtonAction());
+    this.exitButton.addActionListener(a -> exitButtonAction());
   }
 
-  private void buttonAction() {
+  private void calcButtonAction() {
     double side = Double.parseDouble(this.sideField.getText());
     double alpha = Double.parseDouble(this.alphaField.getText());
 
     double radius = (side * Math.sin(Math.toRadians(alpha))) / 2;
 
     System.out.println(radius);
+  }
+
+  private void delButtonAction() {
+    this.sideField.setText("");
+    this.alphaField.setText("");
+  }
+
+  private void exitButtonAction() {
+    System.exit(0);
   }
 }
