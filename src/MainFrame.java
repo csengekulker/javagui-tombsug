@@ -4,6 +4,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -115,18 +116,19 @@ public class MainFrame extends JFrame {
     this.exitButton.addActionListener(a -> exitButtonAction());
   }
 
-  private void calcButtonAction() {
-    try {
-      tryCalcButtonAction();
-    } catch (NumberFormatException e) {
-      e.printStackTrace();
-      this.setTitle("Üres mező(k)!");
-    }
-  }
 
-  private void tryCalcButtonAction() throws NumberFormatException {
-    double side = Double.parseDouble(this.sideField.getText());
-    double alpha = Double.parseDouble(this.alphaField.getText());
+  private void calcButtonAction() {
+    String sideStr = this.sideField.getText();
+
+    String alphaStr = this.alphaField.getText();
+    
+
+    if (sideStr.isEmpty() || alphaStr.isEmpty()) {
+      JOptionPane.showMessageDialog(this, "Nincs érték beállítva!");
+      return;
+    }
+    double side = Double.parseDouble(sideStr);
+    double alpha = Double.parseDouble(alphaStr);
 
     double radius = (side * Math.sin(Math.toRadians(alpha))) / 2;
 
