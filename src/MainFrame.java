@@ -127,6 +127,12 @@ public class MainFrame extends JFrame {
       JOptionPane.showMessageDialog(this, "Nincs érték beállítva!");
       return;
     }
+
+    if (!sideStr.matches("[0-9]+") || !alphaStr.matches("[0-9]+")) {
+      JOptionPane.showMessageDialog(this, "Nem számok!");
+      return;
+    }
+
     double side = Double.parseDouble(sideStr);
     double alpha = Double.parseDouble(alphaStr);
 
