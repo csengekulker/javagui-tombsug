@@ -116,6 +116,15 @@ public class MainFrame extends JFrame {
   }
 
   private void calcButtonAction() {
+    try {
+      tryCalcButtonAction();
+    } catch (NumberFormatException e) {
+      e.printStackTrace();
+      this.setTitle("Üres mező(k)!");
+    }
+  }
+
+  private void tryCalcButtonAction() throws NumberFormatException {
     double side = Double.parseDouble(this.sideField.getText());
     double alpha = Double.parseDouble(this.alphaField.getText());
 
